@@ -20,6 +20,7 @@ public class Crawler {
     public Crawler crawl(){
         try {
             this.document = Jsoup.connect(this.url).post();
+            //log.info(document.toString());
         } catch (IOException e) {
             log.error(e.getMessage());
         }

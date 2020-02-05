@@ -1,3 +1,13 @@
 POST http://localhost:8080/department/crawl
 
 ###
+
+POST http://localhost:8080/course/crawl
+Content-Type: application/json
+
+{
+  "departmentId" : "126904",
+  "courseType": "ALL"
+}
+
+###

@@ -7,6 +7,7 @@ public enum ServerUrl {
 
     DEPARTMENT_INFO("https://kupis.konkuk.ac.kr/sugang/acd/cour/time/SeoulTimetableInfo.jsp"),
     COURSE_INFO("https://kupis.konkuk.ac.kr/sugang/acd/cour/time/SeoulTimetableInfo.jsp?ltYy="+ConstString.YEAR+"&ltShtm="+ConstString.SEMESTER+"&openSust="),
+    COURSE_INFO_TYPE_OPTION("&pobtDiv="),
     CAPACITY_INFO("https://kupis.konkuk.ac.kr/sugang/acd/cour/aply/CourInwonInqTime.jsp?ltYy="+ ConstString.YEAR+"&ltShtm="+ConstString.SEMESTER+"&sbjtId=")
     ;
 
@@ -18,6 +19,6 @@ public enum ServerUrl {
 
     public static class ConstString{
         public static final String YEAR = "2020";
-        public static final String SEMESTER = "B01010";
+        public static final String SEMESTER = "B01011";
     }
 }
