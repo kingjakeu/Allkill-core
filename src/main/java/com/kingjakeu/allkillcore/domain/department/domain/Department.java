@@ -1,4 +1,4 @@
-package com.kingjakeu.allkillcore.domain.course.domain;
+package com.kingjakeu.allkillcore.domain.department.domain;
 
 import lombok.*;
 
@@ -11,15 +11,16 @@ import javax.persistence.Id;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class CourseLikeHistory {
+public class Department {
+
     @Id
-    @Generated
     private String id;
 
     @Column
-    private String courseId;
+    private String name;
 
-    @Column
-    private String memberId;
-
+    @Override
+    public String toString(){
+        return "\nID : "+id+"\n"+"NAME : "+name+"\n";
+    }
 }
