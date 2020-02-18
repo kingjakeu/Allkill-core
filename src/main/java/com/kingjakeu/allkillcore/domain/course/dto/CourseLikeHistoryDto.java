@@ -14,10 +14,8 @@ public class CourseLikeHistoryDto {
 
     public CourseLikeHistory toEntity(){
         return CourseLikeHistory.builder()
-                .id("a")
                 .courseId(courseId)
                 .memberId(memberId)
-
                 .build();
     }
 }

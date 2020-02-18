@@ -4,17 +4,18 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Builder
-@AllArgsConstructor
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 public class CourseLikeHistory {
+
     @Id
-    @Generated
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @Column
     private String courseId;
@@ -22,4 +23,9 @@ public class CourseLikeHistory {
     @Column
     private String memberId;
 
+    @Builder
+    public CourseLikeHistory(String courseId, String memberId){
+        this.courseId = courseId;
+        this.memberId = memberId;
+    }
 }

@@ -11,15 +11,21 @@ import java.io.IOException;
 public class Crawler {
 
     private String url;
+    private String optionalUrl;
     private Document document;
 
     public Crawler(String url){
         this.url = url;
+        this.optionalUrl = "";
+    }
+
+    public void setOptionalUrl(String optionalUrl){
+        this.optionalUrl = optionalUrl;
     }
 
     public Crawler crawl(){
         try {
-            this.document = Jsoup.connect(this.url).post();
+            this.document = Jsoup.connect(this.url + this.optionalUrl).post();
             //log.info(document.toString());
         } catch (IOException e) {
             log.error(e.getMessage());

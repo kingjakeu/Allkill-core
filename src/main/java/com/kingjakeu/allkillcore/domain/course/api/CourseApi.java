@@ -31,6 +31,7 @@ public class CourseApi {
         this.courseRepository = courseRepository;
         this.courseLikeHistoryRepository = courseLikeHistoryRepository;
     }
+
     @PostMapping("/crawl")
     public void crawlCourseInfo(@RequestBody CourseDto courseDto){
         List<Course> courseList = courseService.crawlCourseInfoFromSource(courseDto.getDepartmentId(), courseDto.getCourseType());

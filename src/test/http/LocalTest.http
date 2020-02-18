@@ -11,3 +11,13 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://localhost:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "0824",
+    "memberId": "jake"
+}
+
+###

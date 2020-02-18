@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum CrawlQuery {
 
     DEPARTMENT_INFO("SELECT#openSust"),
-    COURSE_INFO("tr.table_bg_white")
+    COURSE_INFO("tr.table_bg_white"),
+    CAPACITY_INFO("td.table_bg_white")
     ;
 
     private String query;
