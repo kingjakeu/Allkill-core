@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -64,21 +65,30 @@ public class CourseCapacityService {
             Optional<CourseCapacity> courseCapacity = courseCapacityRepository.findById(courseLikeHistory.getCourseId());
 
             if(courseCapacity.isPresent()){
+                courseCapacity.get().updatedCapacity(enrolledCapacity, totalCapacity);
                 if(remainedCapacity > courseCapacity.get().getRemainCapacity() || remainedCapacity > 0){
                     log.info("ALERT REMAIN1");
+                    this.sendSlackMessage(courseCapacity.get());
                 }
-                courseCapacity.get().updatedCapacity(enrolledCapacity, totalCapacity);
                 courseCapacityRepository.save(courseCapacity.get());
             }else{
-                if(remainedCapacity > 0){
-                    log.info("ALERT REMAIN2");
-                }
-                courseCapacityRepository.save(CourseCapacity.builder()
+                CourseCapacity newCourseCapacity = CourseCapacity.builder()
                         .courseId(courseLikeHistory.getCourseId())
+                        .courseName("")
                         .enrolledCapacity(enrolledCapacity)
                         .totalCapacity(totalCapacity)
-                        .build());
+                        .build();
+                if(remainedCapacity > 0){
+                    log.info("ALERT REMAIN2");
+                    this.sendSlackMessage(newCourseCapacity);
+                }
+                courseCapacityRepository.save(newCourseCapacity);
             }
         }
+    }
+
+    private void sendSlackMessage(CourseCapacity courseCapacity){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForEntity(ServerUrl.SLACK.getUrl(), courseCapacity.toSlackMessage(), String.class);
     }
 }

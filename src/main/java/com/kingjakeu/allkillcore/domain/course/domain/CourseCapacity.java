@@ -35,6 +35,9 @@ public class CourseCapacity {
     private String courseId;
 
     @Column
+    private String courseName;
+
+    @Column
     private int remainCapacity;
 
     @Column
@@ -45,8 +48,9 @@ public class CourseCapacity {
 
 
     @Builder
-    public CourseCapacity(String courseId, int enrolledCapacity, int totalCapacity){
+    public CourseCapacity(String courseId, String courseName, int enrolledCapacity, int totalCapacity){
         this.courseId = courseId;
+        this.courseName = courseName;
         this.enrolledCapacity = enrolledCapacity;
         this.totalCapacity = totalCapacity;
         this.remainCapacity = totalCapacity - enrolledCapacity;
@@ -56,5 +60,9 @@ public class CourseCapacity {
         this.enrolledCapacity = enrolledCapacity;
         this.totalCapacity = totalCapacity;
         this.remainCapacity = totalCapacity - enrolledCapacity;
+    }
+
+    public String toSlackMessage(){
+        return "{\"text\": \""+ this.courseId + " " +courseName +"\n"+remainCapacity+" seats have been remained."+"\"}";
     }
 }
