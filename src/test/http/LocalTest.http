@@ -1,3 +1,16 @@
+POST http://localhost:8080/property/register
+Content-Type: application/json
+
+{
+    "id" : "SLACK",
+    "value": "https://hooks.slack.com/services/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"
+}
+
+###
+POST http://localhost:8080/property/slack
+
+###
+
 POST http://localhost:8080/department/crawl
 
 ###
@@ -44,8 +57,12 @@ POST http://localhost:8080/course/like
 Content-Type: application/json
 
 {
-    "courseId" : "3233",
+    "courseId" : "3215",
     "memberId": "jake"
 }
+
+###
+GET http://localhost:8080/course/crawl-list
+Content-Type: application/json
 
 ###

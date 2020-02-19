@@ -48,12 +48,15 @@ public class CourseCapacity {
 
 
     @Builder
-    public CourseCapacity(String courseId, String courseName, int enrolledCapacity, int totalCapacity){
+    public CourseCapacity(String courseId,  int enrolledCapacity, int totalCapacity){
         this.courseId = courseId;
-        this.courseName = courseName;
         this.enrolledCapacity = enrolledCapacity;
         this.totalCapacity = totalCapacity;
         this.remainCapacity = totalCapacity - enrolledCapacity;
+    }
+
+    public void setCourseName(String courseName){
+        this.courseName = courseName;
     }
 
     public void updatedCapacity(int enrolledCapacity, int totalCapacity){

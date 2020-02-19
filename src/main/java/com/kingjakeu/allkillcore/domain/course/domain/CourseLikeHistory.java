@@ -21,11 +21,15 @@ public class CourseLikeHistory {
     private String courseId;
 
     @Column
+    private String courseName;
+
+    @Column
     private String memberId;
 
     @Builder
-    public CourseLikeHistory(String courseId, String memberId){
+    public CourseLikeHistory(String courseId, String courseName, String memberId){
         this.courseId = courseId;
+        this.courseName = courseName;
         this.memberId = memberId;
     }
 }
