@@ -63,6 +63,6 @@ public class CourseCapacity {
     }
 
     public String toSlackMessage(){
-        return "{\"text\": \""+ this.courseId + " " +courseName +"\n"+remainCapacity+" seats have been remained."+"\"}";
+        return "{\"text\": \""+ this.courseId + " " +courseName +"\n"+remainCapacity+" open"+"\"}";
     }
 }

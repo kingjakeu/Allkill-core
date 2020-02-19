@@ -9,7 +9,7 @@ public enum ServerUrl {
     COURSE_INFO("https://kupis.konkuk.ac.kr/sugang/acd/cour/time/SeoulTimetableInfo.jsp?ltYy="+ConstString.YEAR+"&ltShtm="+ConstString.SEMESTER+"&openSust="),
     COURSE_INFO_TYPE_OPTION("&pobtDiv="),
     CAPACITY_INFO("https://kupis.konkuk.ac.kr/sugang/acd/cour/aply/CourInwonInqTime.jsp?ltYy="+ ConstString.YEAR+"&ltShtm="+ConstString.SEMESTER+"&sbjtId="),
-    SLACK("");
+    SLACK("https://hooks.slack.com/services/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");
 
     private String url;
 

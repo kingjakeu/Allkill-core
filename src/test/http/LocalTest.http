@@ -6,8 +6,36 @@ POST http://localhost:8080/course/crawl
 Content-Type: application/json
 
 {
-  "departmentId" : "126904",
+  "departmentId" : "006751",
   "courseType": "ALL"
+}
+
+###
+
+POST http://localhost:8080/course/crawl
+Content-Type: application/json
+
+{
+    "departmentId" : "127113",
+    "courseType": "ALL"
+}
+###
+
+POST http://localhost:8080/course/crawl
+Content-Type: application/json
+
+{
+    "departmentId" : "127114",
+    "courseType": "ALL"
+}
+###
+
+POST http://localhost:8080/course/crawl
+Content-Type: application/json
+
+{
+    "departmentId" : "127428",
+    "courseType": "ALL"
 }
 
 ###
@@ -16,7 +44,7 @@ POST http://localhost:8080/course/like
 Content-Type: application/json
 
 {
-    "courseId" : "0824",
+    "courseId" : "3233",
     "memberId": "jake"
 }
 
