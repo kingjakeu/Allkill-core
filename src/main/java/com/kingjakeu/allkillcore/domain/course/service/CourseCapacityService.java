@@ -8,6 +8,7 @@ import com.kingjakeu.allkillcore.domain.course.domain.CourseCapacity;
 import com.kingjakeu.allkillcore.domain.course.domain.CourseLikeHistory;
 import com.kingjakeu.allkillcore.domain.propertry.dao.PropertyRepository;
 import com.kingjakeu.allkillcore.domain.propertry.domain.Property;
+import com.kingjakeu.allkillcore.util.AutoSugangBot;
 import com.kingjakeu.allkillcore.util.Crawler;
 import com.kingjakeu.allkillcore.util.SlackSender;
 import lombok.extern.slf4j.Slf4j;
@@ -72,12 +73,12 @@ public class CourseCapacityService {
             if(capacityData.isPresent()){
                 if(capacityData.get().getRemainCapacity() < crawlCapacityInfo.getRemainCapacity()){
                     log.info("ALERT SEAT REMAIN");
-                    slackSender.sendMessage(crawlCapacityInfo.toSlackMessage());
+                    String result = this.proceedAutoSugang(crawlCapacityInfo.getCourseId());
+                    slackSender.sendMessage(crawlCapacityInfo.toSlackMessage(result));
                 }
             }else{
                 if(crawlCapacityInfo.getRemainCapacity() > 0){
                     log.info("ALERT REMAIN2");
-                    //this.sendSlackMessage(newCourseCapacity);
                 }
                 log.info("ALERT SAVED :"+crawlCapacityInfo.toString());
             }
@@ -103,5 +104,12 @@ public class CourseCapacityService {
     private String getSlackLink(){
         Optional<Property> slackUrl = propertyRepository.findById("SLACK");
         return slackUrl.isPresent() ? slackUrl.get().getValue() : "";
+    }
+
+    private String proceedAutoSugang(String courseId){
+        AutoSugangBot autoSugangBot = new AutoSugangBot();
+        Optional<Property> userId = propertyRepository.findById("USER_ID");
+        Optional<Property> userPassword = propertyRepository.findById("USER_PASSWORD");
+        return "신청 결과 : "+autoSugangBot.sugangBotExecute(userId.get().getValue(), userPassword.get().getValue(), courseId);
     }
 }

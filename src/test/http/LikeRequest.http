@@ -1,0 +1,198 @@
+POST http://localhost:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1330",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1500",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "3187",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "3200",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "3215",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1318",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1331",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1333",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1315",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1330",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1320",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1334",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1335",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1317",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1332",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "1319",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "3181",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "3187",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "3204",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "3184",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "3192",
+    "memberId": "jake"
+}
+
+###
+POST http://13.124.190.210:8080/course/like
+Content-Type: application/json
+
+{
+    "courseId" : "3233",
+    "memberId": "jake"
+}
+
+###

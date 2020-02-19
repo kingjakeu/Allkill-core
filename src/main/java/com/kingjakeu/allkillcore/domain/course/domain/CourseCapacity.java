@@ -66,6 +66,10 @@ public class CourseCapacity {
     }
 
     public String toSlackMessage(){
-        return "{\"text\": \""+ this.courseId + " " +courseName +"\n"+remainCapacity+" open"+"\"}";
+        return "{\"text\": \""+ this.courseId + " " +courseName +"\n"+remainCapacity+" 자리 열림"+"\"}";
+    }
+
+    public String toSlackMessage(String addMessage) {
+        return "{\"text\": \"" + this.courseId + " " + courseName + "\n" + remainCapacity + " 자리 열림 \n" + addMessage + "\"}";
     }
 }

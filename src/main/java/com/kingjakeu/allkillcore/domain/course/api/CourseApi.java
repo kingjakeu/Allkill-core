@@ -5,7 +5,6 @@ import com.kingjakeu.allkillcore.domain.course.dao.CourseLikeHistoryRepository;
 import com.kingjakeu.allkillcore.domain.course.dao.CourseRepository;
 import com.kingjakeu.allkillcore.domain.course.domain.Course;
 import com.kingjakeu.allkillcore.domain.course.domain.CourseCapacity;
-import com.kingjakeu.allkillcore.domain.course.domain.CourseLikeHistory;
 import com.kingjakeu.allkillcore.domain.course.dto.CourseDto;
 import com.kingjakeu.allkillcore.domain.course.dto.CourseLikeHistoryDto;
 import com.kingjakeu.allkillcore.domain.course.service.CourseService;

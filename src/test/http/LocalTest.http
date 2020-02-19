@@ -7,6 +7,24 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8080/property/register
+Content-Type: application/json
+
+{
+    "id" : "USER_ID",
+    "value": ""
+}
+
+###
+POST http://localhost:8080/property/register
+Content-Type: application/json
+
+{
+    "id" : "USER_PASSWORD",
+    "value": ""
+}
+
+###
 POST http://localhost:8080/property/slack
 
 ###
