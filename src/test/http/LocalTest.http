@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "id" : "SLACK",
-    "value": "https://hooks.slack.com/services/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"
+    "value": ""
 }
 
 ###
