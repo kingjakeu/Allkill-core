@@ -7,7 +7,9 @@ import com.kingjakeu.allkillcore.domain.course.domain.Course;
 import com.kingjakeu.allkillcore.domain.course.domain.CourseCapacity;
 import com.kingjakeu.allkillcore.domain.course.dto.CourseDto;
 import com.kingjakeu.allkillcore.domain.course.dto.CourseLikeHistoryDto;
+import com.kingjakeu.allkillcore.domain.course.dto.ManualSugangDto;
 import com.kingjakeu.allkillcore.domain.course.service.CourseService;
+import com.kingjakeu.allkillcore.util.ManualSugangBot;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,5 +59,23 @@ public class CourseApi {
     @PostMapping("/unlike")
     public void unlikeCourse(@RequestBody CourseLikeHistoryDto courseLikeHistoryDto){
         courseLikeHistoryRepository.delete(courseLikeHistoryDto.toEntity());
+    }
+
+    @PostMapping("/login")
+    public String doLoginManually(@RequestBody ManualSugangDto manualSugangDto){
+        ManualSugangBot sugangBot = new ManualSugangBot();
+        return sugangBot.requestLoginIn(manualSugangDto.getUserId(), manualSugangDto.getUserPassword());
+    }
+
+    @PostMapping("/session")
+    public String checkSession(@RequestBody ManualSugangDto manualSugangDto){
+        ManualSugangBot sugangBot = new ManualSugangBot();
+        return sugangBot.checkSession(manualSugangDto.getCookie());
+    }
+
+    @PostMapping("/sugang")
+    public void doSugangManually(@RequestBody ManualSugangDto manualSugangDto){
+        ManualSugangBot sugangBot = new ManualSugangBot();
+        sugangBot.requestSugang(manualSugangDto.getCookie(), manualSugangDto.getCourseId());
     }
 }

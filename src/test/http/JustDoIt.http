@@ -1,0 +1,20 @@
+
+POST http://localhost:8080/course/sugang
+Content-Type: application/json
+
+{
+  "cookie" : "",
+  "courseId": "3187"
+}
+
+###
+
+POST http://localhost:8080/course/sugang
+Content-Type: application/json
+
+{
+  "cookie" : "",
+  "courseId": "3200"
+}
+
+###

@@ -1,0 +1,19 @@
+POST http://localhost:8080/course/login
+Content-Type: application/json
+
+{
+"userId" : "pado",
+"userPassword": "dusgml1818%21"
+}
+
+###
+
+POST http://localhost:8080/course/session
+Content-Type: application/json
+
+{
+  "cookie" : ""
+}
+
+
+###
