@@ -67,10 +67,11 @@ public class CourseCapacityService {
         for(CourseLikeHistory courseLikeHistory : courseLikeHistoryList){
             CourseCapacity crawlCapacityInfo = this.crawlCapacityInfo(courseLikeHistory.getCourseId());
             crawlCapacityInfo.setCourseName(courseLikeHistory.getCourseName());
+            crawlCapacityInfo.setLocation(courseLikeHistory.getCourseLocation());
 
             Optional<CourseCapacity> capacityData = courseCapacityRepository.findById(courseLikeHistory.getCourseId());
             if (courseAutoSaveRepository.findById(courseLikeHistory.getCourseId()).isPresent()){
-                log.info("test");
+                log.info("auto on : " + courseLikeHistory.toString());
             }
             if(capacityData.isPresent()){
                 if(capacityData.get().getRemainCapacity() < crawlCapacityInfo.getRemainCapacity() || crawlCapacityInfo.getRemainCapacity() > 0){

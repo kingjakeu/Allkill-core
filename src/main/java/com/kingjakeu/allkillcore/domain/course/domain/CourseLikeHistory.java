@@ -24,12 +24,16 @@ public class CourseLikeHistory {
     private String courseName;
 
     @Column
+    private String courseLocation;
+
+    @Column
     private String memberId;
 
     @Builder
-    public CourseLikeHistory(String courseId, String courseName, String memberId){
+    public CourseLikeHistory(String courseId, String courseName, String courseLocation, String memberId){
         this.courseId = courseId;
         this.courseName = courseName;
+        this.courseLocation = courseLocation;
         this.memberId = memberId;
     }
 }

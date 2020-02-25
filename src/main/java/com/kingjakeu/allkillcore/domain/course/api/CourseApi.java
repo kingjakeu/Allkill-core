@@ -57,7 +57,9 @@ public class CourseApi {
         Optional<Course> courseOptional = courseRepository.findById(courseLikeHistoryDto.getCourseId());
 
         String courseName = courseOptional.isPresent() ? courseOptional.get().getName() : "";
+        String courseLocation = courseOptional.isPresent() ? courseOptional.get().getLocation() : "";
         courseLikeHistoryDto.setCourseName(courseName);
+        courseLikeHistoryDto.setCourseLocation(courseLocation);
         courseLikeHistoryRepository.save(courseLikeHistoryDto.toEntity());
     }
 
