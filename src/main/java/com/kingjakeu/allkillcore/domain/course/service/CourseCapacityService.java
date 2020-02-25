@@ -75,18 +75,18 @@ public class CourseCapacityService {
             if(capacityData.isPresent()){
                 if(capacityData.get().getRemainCapacity() < crawlCapacityInfo.getRemainCapacity() || crawlCapacityInfo.getRemainCapacity() > 0){
                     log.info("ALERT SEAT REMAIN");
-                    //slackSender.sendMessage(crawlCapacityInfo.toSlackMessage());
+                    slackSender.sendMessage(crawlCapacityInfo.toSlackMessage());
                     if (courseAutoSaveRepository.findById(courseLikeHistory.getCourseId()).isPresent()){
                         String result = this.proceedAutoSugang(crawlCapacityInfo.getCourseId());
-                        //slackSender.sendMessage(crawlCapacityInfo.toSlackMessage(result));
+                        slackSender.sendMessage(crawlCapacityInfo.toSlackMessage(result));
                     }
                 }
             }else{
                 if(crawlCapacityInfo.getRemainCapacity() > 0){
-                    //slackSender.sendMessage(crawlCapacityInfo.toSlackMessage());
+                    slackSender.sendMessage(crawlCapacityInfo.toSlackMessage());
                     if (courseAutoSaveRepository.findById(courseLikeHistory.getCourseId()).isPresent()){
                         String result = this.proceedAutoSugang(crawlCapacityInfo.getCourseId());
-                        //slackSender.sendMessage(crawlCapacityInfo.toSlackMessage(result));
+                        slackSender.sendMessage(crawlCapacityInfo.toSlackMessage(result));
                     }
                 }
                 log.info("ALERT SAVED :"+crawlCapacityInfo.toString());
