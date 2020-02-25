@@ -1,5 +1,6 @@
 package com.kingjakeu.allkillcore.domain.course.api;
 
+import com.kingjakeu.allkillcore.domain.course.dao.CourseAutoSaveRepository;
 import com.kingjakeu.allkillcore.domain.course.dao.CourseCapacityRepository;
 import com.kingjakeu.allkillcore.domain.course.dao.CourseLikeHistoryRepository;
 import com.kingjakeu.allkillcore.domain.course.dao.CourseRepository;
@@ -26,13 +27,17 @@ public class CourseApi {
     private CourseRepository courseRepository;
     private CourseLikeHistoryRepository courseLikeHistoryRepository;
     private CourseCapacityRepository courseCapacityRepository;
+    private CourseAutoSaveRepository courseAutoSaveRepository;
 
     @Autowired
-    public CourseApi(CourseService courseService, CourseRepository courseRepository, CourseLikeHistoryRepository courseLikeHistoryRepository, CourseCapacityRepository courseCapacityRepository){
+    public CourseApi(CourseService courseService, CourseRepository courseRepository,
+                     CourseLikeHistoryRepository courseLikeHistoryRepository, CourseCapacityRepository courseCapacityRepository,
+                     CourseAutoSaveRepository courseAutoSaveRepository){
         this.courseService = courseService;
         this.courseRepository = courseRepository;
         this.courseLikeHistoryRepository = courseLikeHistoryRepository;
         this.courseCapacityRepository = courseCapacityRepository;
+        this.courseAutoSaveRepository = courseAutoSaveRepository;
     }
 
     @PostMapping("/crawl")
@@ -54,6 +59,12 @@ public class CourseApi {
         String courseName = courseOptional.isPresent() ? courseOptional.get().getName() : "";
         courseLikeHistoryDto.setCourseName(courseName);
         courseLikeHistoryRepository.save(courseLikeHistoryDto.toEntity());
+    }
+
+    @PostMapping("/auto-save")
+    public void saveAutoCourse(@RequestBody CourseLikeHistoryDto courseLikeHistoryDto){
+       Optional<CourseCapacity> courseCapacityOptional = courseCapacityRepository.findById(courseLikeHistoryDto.getCourseId());
+        courseCapacityOptional.ifPresent(courseCapacity -> courseAutoSaveRepository.save(courseCapacity.toCourseAutoSave()));
     }
 
     @PostMapping("/unlike")

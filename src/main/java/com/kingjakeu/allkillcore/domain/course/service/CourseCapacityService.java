@@ -2,6 +2,7 @@ package com.kingjakeu.allkillcore.domain.course.service;
 
 import com.kingjakeu.allkillcore.common.enums.CrawlQuery;
 import com.kingjakeu.allkillcore.common.enums.ServerUrl;
+import com.kingjakeu.allkillcore.domain.course.dao.CourseAutoSaveRepository;
 import com.kingjakeu.allkillcore.domain.course.dao.CourseCapacityRepository;
 import com.kingjakeu.allkillcore.domain.course.dao.CourseLikeHistoryRepository;
 import com.kingjakeu.allkillcore.domain.course.domain.CourseCapacity;
@@ -14,13 +15,8 @@ import com.kingjakeu.allkillcore.util.SlackSender;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,16 +46,19 @@ public class CourseCapacityService {
 
     private CourseLikeHistoryRepository courseLikeHistoryRepository;
     private CourseCapacityRepository courseCapacityRepository;
+    private CourseAutoSaveRepository courseAutoSaveRepository;
     private PropertyRepository propertyRepository;
 
     @Autowired
-    public CourseCapacityService(CourseLikeHistoryRepository courseLikeHistoryRepository, CourseCapacityRepository courseCapacityRepository, PropertyRepository propertyRepository){
+    public CourseCapacityService(CourseLikeHistoryRepository courseLikeHistoryRepository, CourseCapacityRepository courseCapacityRepository,
+                                 CourseAutoSaveRepository courseAutoSaveRepository, PropertyRepository propertyRepository){
         this.courseLikeHistoryRepository = courseLikeHistoryRepository;
         this.courseCapacityRepository = courseCapacityRepository;
+        this.courseAutoSaveRepository = courseAutoSaveRepository;
         this.propertyRepository = propertyRepository;
     }
 
-    //@Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 2000)
     public void runScheduledCrawling(){
         log.info("SCHEDULER RUN");
         List<CourseLikeHistory> courseLikeHistoryList = courseLikeHistoryRepository.findAll();
@@ -70,15 +69,25 @@ public class CourseCapacityService {
             crawlCapacityInfo.setCourseName(courseLikeHistory.getCourseName());
 
             Optional<CourseCapacity> capacityData = courseCapacityRepository.findById(courseLikeHistory.getCourseId());
+            if (courseAutoSaveRepository.findById(courseLikeHistory.getCourseId()).isPresent()){
+                log.info("test");
+            }
             if(capacityData.isPresent()){
-                if(capacityData.get().getRemainCapacity() < crawlCapacityInfo.getRemainCapacity()){
+                if(capacityData.get().getRemainCapacity() < crawlCapacityInfo.getRemainCapacity() || crawlCapacityInfo.getRemainCapacity() > 0){
                     log.info("ALERT SEAT REMAIN");
-                    String result = this.proceedAutoSugang(crawlCapacityInfo.getCourseId());
-                    slackSender.sendMessage(crawlCapacityInfo.toSlackMessage(result));
+                    //slackSender.sendMessage(crawlCapacityInfo.toSlackMessage());
+                    if (courseAutoSaveRepository.findById(courseLikeHistory.getCourseId()).isPresent()){
+                        String result = this.proceedAutoSugang(crawlCapacityInfo.getCourseId());
+                        //slackSender.sendMessage(crawlCapacityInfo.toSlackMessage(result));
+                    }
                 }
             }else{
                 if(crawlCapacityInfo.getRemainCapacity() > 0){
-                    log.info("ALERT REMAIN2");
+                    //slackSender.sendMessage(crawlCapacityInfo.toSlackMessage());
+                    if (courseAutoSaveRepository.findById(courseLikeHistory.getCourseId()).isPresent()){
+                        String result = this.proceedAutoSugang(crawlCapacityInfo.getCourseId());
+                        //slackSender.sendMessage(crawlCapacityInfo.toSlackMessage(result));
+                    }
                 }
                 log.info("ALERT SAVED :"+crawlCapacityInfo.toString());
             }

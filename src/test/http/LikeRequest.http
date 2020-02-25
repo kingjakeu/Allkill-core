@@ -1,4 +1,4 @@
-POST http://localhost:8080/course/like
+POST http://13.124.190.210:8080/course/like
 Content-Type: application/json
 
 {

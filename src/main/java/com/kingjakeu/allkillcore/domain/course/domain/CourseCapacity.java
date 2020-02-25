@@ -66,10 +66,17 @@ public class CourseCapacity {
     }
 
     public String toSlackMessage(){
-        return "{\"text\": \""+ this.courseId + " " +courseName +"\n"+remainCapacity+" 자리 열림"+"\"}";
+        return this.courseId + " " +courseName +"\n"+remainCapacity+" 자리 열림";
     }
 
     public String toSlackMessage(String addMessage) {
-        return "{\"text\": \"" + this.courseId + " " + courseName + "\n" + remainCapacity + " 자리 열림 \n" + addMessage + "\"}";
+        return this.toSlackMessage() + addMessage;
+    }
+
+    public CourseAutoSave toCourseAutoSave(){
+        return CourseAutoSave.builder()
+                .courseId(this.courseId)
+                .courseName(this.courseName)
+                .build();
     }
 }

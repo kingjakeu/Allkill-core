@@ -79,6 +79,16 @@ Content-Type: application/json
     "memberId": "jake"
 }
 
+
+###
+
+POST http://localhost:8080/course/auto-save
+Content-Type: application/json
+
+{
+    "courseId" : "3215"
+}
+
 ###
 GET http://localhost:8080/course/crawl-list
 Content-Type: application/json

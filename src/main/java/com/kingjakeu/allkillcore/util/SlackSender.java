@@ -40,7 +40,7 @@ public class SlackSender {
     }
 
     public void sendMessage(String message){
-        HttpEntity<String> httpEntity = new HttpEntity<>(message, this.httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>("{\"text\": \"" + message +  "\"}", this.httpHeaders);
         this.restTemplate.exchange(this.url, HttpMethod.POST, httpEntity, String.class);
     }
 }
