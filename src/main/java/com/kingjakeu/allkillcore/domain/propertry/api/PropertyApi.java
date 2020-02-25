@@ -53,6 +53,6 @@ public class PropertyApi {
     public void sendTestSlackMessage(){
         Optional<Property> slackUrl = propertyRepository.findById("SLACK");
         SlackSender slackSender = new SlackSender(slackUrl.isPresent() ? slackUrl.get().getValue() : "");
-        slackSender.sendMessage("{\"text\": \""+ " 테스트 입니다 "+"\"}");
+        slackSender.sendMessage(" 테스트 입니다 ");
     }
 }
