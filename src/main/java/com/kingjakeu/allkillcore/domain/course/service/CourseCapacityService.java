@@ -71,7 +71,7 @@ public class CourseCapacityService {
 
             Optional<CourseCapacity> capacityData = courseCapacityRepository.findById(courseLikeHistory.getCourseId());
             if (courseAutoSaveRepository.findById(courseLikeHistory.getCourseId()).isPresent()){
-                log.info("auto on : " + courseLikeHistory.toString());
+                //log.info("auto on : " + courseLikeHistory.toString());
             }
             if(capacityData.isPresent()){
                 if(capacityData.get().getRemainCapacity() < crawlCapacityInfo.getRemainCapacity() || crawlCapacityInfo.getRemainCapacity() > 0){

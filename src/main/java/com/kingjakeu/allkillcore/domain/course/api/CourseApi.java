@@ -5,7 +5,9 @@ import com.kingjakeu.allkillcore.domain.course.dao.CourseCapacityRepository;
 import com.kingjakeu.allkillcore.domain.course.dao.CourseLikeHistoryRepository;
 import com.kingjakeu.allkillcore.domain.course.dao.CourseRepository;
 import com.kingjakeu.allkillcore.domain.course.domain.Course;
+import com.kingjakeu.allkillcore.domain.course.domain.CourseAutoSave;
 import com.kingjakeu.allkillcore.domain.course.domain.CourseCapacity;
+import com.kingjakeu.allkillcore.domain.course.domain.CourseLikeHistory;
 import com.kingjakeu.allkillcore.domain.course.dto.CourseDto;
 import com.kingjakeu.allkillcore.domain.course.dto.CourseLikeHistoryDto;
 import com.kingjakeu.allkillcore.domain.course.dto.ManualSugangDto;
@@ -13,6 +15,7 @@ import com.kingjakeu.allkillcore.domain.course.service.CourseService;
 import com.kingjakeu.allkillcore.util.ManualSugangBot;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,11 +49,20 @@ public class CourseApi {
         courseRepository.saveAll(courseList);
     }
 
+    @GetMapping("like-list")
+    public List<CourseLikeHistory> getCourseLikeList(){
+        return courseLikeHistoryRepository.findAll();
+    }
+
     @GetMapping("/crawl-list")
     public List<CourseCapacity> getCrawlingList(){
        return courseCapacityRepository.findAll();
     }
 
+    @GetMapping("/auto-list")
+    public List<CourseAutoSave> getAutoSaveList(){
+        return courseAutoSaveRepository.findAll();
+    }
 
     @PostMapping("/like")
     public void likeCourse(@RequestBody CourseLikeHistoryDto courseLikeHistoryDto){
@@ -66,12 +78,20 @@ public class CourseApi {
     @PostMapping("/auto-save")
     public void saveAutoCourse(@RequestBody CourseLikeHistoryDto courseLikeHistoryDto){
        Optional<CourseCapacity> courseCapacityOptional = courseCapacityRepository.findById(courseLikeHistoryDto.getCourseId());
-        courseCapacityOptional.ifPresent(courseCapacity -> courseAutoSaveRepository.save(courseCapacity.toCourseAutoSave()));
+       courseCapacityOptional.ifPresent(courseCapacity -> courseAutoSaveRepository.save(courseCapacity.toCourseAutoSave()));
     }
 
-    @PostMapping("/unlike")
-    public void unlikeCourse(@RequestBody CourseLikeHistoryDto courseLikeHistoryDto){
+    @PostMapping("/dislike")
+    public void dislikeCourse(@RequestBody CourseLikeHistoryDto courseLikeHistoryDto){
         courseLikeHistoryRepository.delete(courseLikeHistoryDto.toEntity());
+    }
+
+    @PostMapping("/delete")
+    @Transactional
+    public void deleteCourse(@RequestBody CourseLikeHistoryDto courseLikeHistoryDto){
+        courseLikeHistoryRepository.deleteCourseLikeHistoryByCourseId(courseLikeHistoryDto.getCourseId());
+        courseAutoSaveRepository.deleteById(courseLikeHistoryDto.getCourseId());
+        courseCapacityRepository.deleteById(courseLikeHistoryDto.getCourseId());
     }
 
     @PostMapping("/login")
