@@ -58,7 +58,7 @@ public class CourseCapacityService {
         this.propertyRepository = propertyRepository;
     }
 
-    @Scheduled(fixedRate = 480)
+    @Scheduled(fixedRate = 1000)
     public void runScheduledCrawling(){
         log.info("SCHEDULER RUN");
         List<CourseLikeHistory> courseLikeHistoryList = courseLikeHistoryRepository.findAll();
