@@ -58,7 +58,7 @@ public class CourseCapacityService {
         this.propertyRepository = propertyRepository;
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 480)
     public void runScheduledCrawling(){
         log.info("SCHEDULER RUN");
         List<CourseLikeHistory> courseLikeHistoryList = courseLikeHistoryRepository.findAll();
@@ -70,9 +70,6 @@ public class CourseCapacityService {
             crawlCapacityInfo.setLocation(courseLikeHistory.getCourseLocation());
 
             Optional<CourseCapacity> capacityData = courseCapacityRepository.findById(courseLikeHistory.getCourseId());
-            if (courseAutoSaveRepository.findById(courseLikeHistory.getCourseId()).isPresent()){
-                //log.info("auto on : " + courseLikeHistory.toString());
-            }
             if(capacityData.isPresent()){
                 if(capacityData.get().getRemainCapacity() < crawlCapacityInfo.getRemainCapacity() || crawlCapacityInfo.getRemainCapacity() > 0){
                     log.info("ALERT SEAT REMAIN");
