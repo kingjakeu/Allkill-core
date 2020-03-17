@@ -71,12 +71,14 @@ public class CourseCapacityService {
 
             Optional<CourseCapacity> capacityData = courseCapacityRepository.findById(courseLikeHistory.getCourseId());
             if(capacityData.isPresent()){
-                if(capacityData.get().getRemainCapacity() < crawlCapacityInfo.getRemainCapacity() || crawlCapacityInfo.getRemainCapacity() > 0){
-                    log.info("ALERT SEAT REMAIN");
-                    slackSender.sendMessage(crawlCapacityInfo.toSlackMessage());
-                    if (courseAutoSaveRepository.findById(courseLikeHistory.getCourseId()).isPresent()){
-                        String result = this.proceedAutoSugang(crawlCapacityInfo.getCourseId());
-                        slackSender.sendMessage(crawlCapacityInfo.toSlackMessage(result));
+                if(crawlCapacityInfo.getRemainCapacity() > 0){
+                    if(capacityData.get().getRemainCapacity() < crawlCapacityInfo.getRemainCapacity()){
+                        log.info("ALERT SEAT REMAIN");
+                        slackSender.sendMessage(crawlCapacityInfo.toSlackMessage());
+                        if (courseAutoSaveRepository.findById(courseLikeHistory.getCourseId()).isPresent()){
+                            String result = this.proceedAutoSugang(crawlCapacityInfo.getCourseId());
+                            slackSender.sendMessage(crawlCapacityInfo.toSlackMessage(result));
+                        }
                     }
                 }
             }else{
