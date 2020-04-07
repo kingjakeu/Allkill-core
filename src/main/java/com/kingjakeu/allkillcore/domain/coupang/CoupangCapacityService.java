@@ -48,7 +48,7 @@ public class CoupangCapacityService {
     }
 
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 3000)
     public void crawlCoupang() {
         Connection connection = this.getConnection();
         try{
@@ -68,8 +68,8 @@ public class CoupangCapacityService {
     }
 
     public Connection getConnection(){
-        return Jsoup.connect("https://www.coupang.com/vp/products/1384804427?itemId=2419615336&vendorItemId=70413795361&isAddedCart=")
-                .timeout(5000)
+        return Jsoup.connect("https://www.coupang.com/vp/products/1384804427")
+                .timeout(3000)
                 .header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'")
                 .header("accept-encoding", "gzip, deflate, br")
                 .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
@@ -81,6 +81,9 @@ public class CoupangCapacityService {
                 .header("sec-fetch-site", "none")
                 .header("upgrade-insecure-requests", "1")
                 .header("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36")
+                .data("itemId", "2419615336")
+                .data("vendorItemId", "70413795361")
+                .data("isAddedCart", "")
                 .method(Connection.Method.GET);
     }
 
