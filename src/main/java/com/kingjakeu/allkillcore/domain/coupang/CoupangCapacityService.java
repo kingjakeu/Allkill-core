@@ -75,15 +75,11 @@ public class CoupangCapacityService {
                 .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
                 .header("cache-control", "no-cache")
                 .header("pragma", "no-cache")
-                .header("referer", "https://www.coupang.com/vp/products/1384804427?itemId=2419615336&vendorItemId=70413795361&isAddedCart=")
                 .header("sec-fetch-dest", "document")
                 .header("sec-fetch-mode", "navigate")
                 .header("sec-fetch-site", "none")
                 .header("upgrade-insecure-requests", "1")
-                .header("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36")
-                .data("itemId", "2419615336")
-                .data("vendorItemId", "70413795361")
-                .data("isAddedCart", "")
+                .header("user-agent", "Mozilla/5.0")
                 .method(Connection.Method.GET);
     }
 
