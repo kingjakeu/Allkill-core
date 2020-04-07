@@ -48,7 +48,7 @@ public class CoupangCapacityService {
     }
 
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 5000)
     public void crawlCoupang() {
         Connection connection = this.getConnection();
         try{
@@ -63,13 +63,13 @@ public class CoupangCapacityService {
                 slackSender.sendMessage("GO GO COUPANG");
             }
         }catch (IOException e){
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 
     public Connection getConnection(){
         return Jsoup.connect("https://www.coupang.com/vp/products/1384804427?itemId=2419615336&vendorItemId=70413795361&isAddedCart=")
-                .timeout(2000)
+                .timeout(5000)
                 .header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'")
                 .header("accept-encoding", "gzip, deflate, br")
                 .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
