@@ -53,6 +53,7 @@ public class CoupangCapacityService {
         try{
 
             Connection connectionTest = Jsoup.connect("https://www.coupang.com/vp/products/1384804427/")
+                    .ignoreHttpErrors(true)
                     .userAgent("Mozilla/5.0");
             Document doc = connectionTest.get();
             log.info(doc.text());
