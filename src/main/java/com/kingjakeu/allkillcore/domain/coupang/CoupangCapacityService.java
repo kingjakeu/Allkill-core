@@ -50,20 +50,34 @@ public class CoupangCapacityService {
 
     @Scheduled(fixedRate = 5000)
     public void crawlCoupang() {
-        Connection connection = this.getConnection();
         try{
-            Document document = connection.get();
-            Element element = document.getElementsByClass("prod-quantity__input").first();
-            String cap = element.attr("value");
-            log.info("Remained : " + cap);
 
-            if(cap.equals("1")){
-                SlackSender slackSender = new SlackSender(this.getSlackLink());
-                slackSender.sendMessage("GO GO COUPANG");
-            }
-        }catch (IOException e){
-            log.error(e.getMessage(), e);
+            Connection connectionTest = Jsoup.connect("https://www.coupang.com/vp/products/1384804427/")
+                    .userAgent("Mozilla/5.0");
+            Document doc = connectionTest.get();
+            log.info(doc.text());
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
+
+
+
+//        Connection connection = this.getConnection();
+//        try{
+//            Document document = connection.get();
+//            Element element = document.getElementsByClass("prod-quantity__input").first();
+//            String cap = element.attr("value");
+//            log.info("Remained : " + cap);
+//
+//            if(cap.equals("1")){
+//                SlackSender slackSender = new SlackSender(this.getSlackLink());
+//                slackSender.sendMessage("GO GO COUPANG");
+//            }
+//        }catch (IOException e){
+//            log.error(e.getMessage(), e);
+//        }
     }
 
     public Connection getConnection(){
@@ -77,7 +91,6 @@ public class CoupangCapacityService {
                 .header("sec-fetch-dest", "document")
                 .header("sec-fetch-mode", "navigate")
                 .header("sec-fetch-site", "none")
-                .header("upgrade-insecure-requests", "1")
                 .header("user-agent", "Mozilla/5.0");
     }
 
