@@ -9,6 +9,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -47,18 +48,11 @@ public class CoupangCapacityService {
     }
 
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 5000)
     public void crawlCoupang() {
-
         Connection connection = this.getConnection();
         try{
-            Connection connectionTest = Jsoup.connect("https://www.naver.com/").method(Connection.Method.GET);
-            Document testDoc = connectionTest.execute().parse();
-            log.info(testDoc.text());
-
-
-            Connection.Response response = connection.execute();
-            Document document = response.parse();
+            Document document = connection.get();
             Element element = document.getElementsByClass("prod-quantity__input").first();
             String cap = element.attr("value");
             log.info("Remained : " + cap);
@@ -74,7 +68,7 @@ public class CoupangCapacityService {
 
     public Connection getConnection(){
         return Jsoup.connect("https://www.coupang.com/vp/products/1384804427")
-                .timeout(30000)
+                .timeout(0)
                 .header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'")
                 .header("accept-encoding", "gzip, deflate, br")
                 .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
@@ -84,8 +78,7 @@ public class CoupangCapacityService {
                 .header("sec-fetch-mode", "navigate")
                 .header("sec-fetch-site", "none")
                 .header("upgrade-insecure-requests", "1")
-                .header("user-agent", "Mozilla/5.0")
-                .method(Connection.Method.GET);
+                .header("user-agent", "Mozilla/5.0");
     }
 
     private String getSlackLink(){
