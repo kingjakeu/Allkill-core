@@ -9,7 +9,6 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -50,8 +49,14 @@ public class CoupangCapacityService {
 
     @Scheduled(fixedRate = 10000)
     public void crawlCoupang() {
+
         Connection connection = this.getConnection();
         try{
+            Connection connectionTest = Jsoup.connect("https://www.naver.com/").method(Connection.Method.GET);
+            Document testDoc = connectionTest.execute().parse();
+            log.info(testDoc.text());
+
+
             Connection.Response response = connection.execute();
             Document document = response.parse();
             Element element = document.getElementsByClass("prod-quantity__input").first();
