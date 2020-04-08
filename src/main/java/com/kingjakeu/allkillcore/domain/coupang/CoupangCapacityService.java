@@ -48,42 +48,27 @@ public class CoupangCapacityService {
     }
 
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 3000)
     public void crawlCoupang() {
+        Connection connection = this.getConnection();
         try{
+            Document document = connection.get();
+            Element element = document.getElementsByClass("prod-quantity__input").first();
+            String cap = element.attr("value");
+            log.info("Remained : " + cap);
 
-            Connection connectionTest = Jsoup.connect("https://www.coupang.com/vp/products/1384804427/")
-                    .ignoreHttpErrors(true)
-                    .userAgent("Mozilla/5.0");
-            Document doc = connectionTest.get();
-            log.info(doc.text());
-
-        }catch (Exception e){
-            e.printStackTrace();
+            if(cap.equals("1")){
+                SlackSender slackSender = new SlackSender(this.getSlackLink());
+                slackSender.sendMessage("GO GO COUPANG");
+            }
+        }catch (IOException e){
+            log.error(e.getMessage());
         }
-
-
-
-
-//        Connection connection = this.getConnection();
-//        try{
-//            Document document = connection.get();
-//            Element element = document.getElementsByClass("prod-quantity__input").first();
-//            String cap = element.attr("value");
-//            log.info("Remained : " + cap);
-//
-//            if(cap.equals("1")){
-//                SlackSender slackSender = new SlackSender(this.getSlackLink());
-//                slackSender.sendMessage("GO GO COUPANG");
-//            }
-//        }catch (IOException e){
-//            log.error(e.getMessage(), e);
-//        }
     }
 
     public Connection getConnection(){
         return Jsoup.connect("https://www.coupang.com/vp/products/1384804427")
-                .timeout(0)
+                .timeout(3000)
                 .header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'")
                 .header("accept-encoding", "gzip, deflate, br")
                 .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
