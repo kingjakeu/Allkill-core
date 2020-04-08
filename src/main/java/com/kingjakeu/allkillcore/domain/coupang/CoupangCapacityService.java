@@ -83,7 +83,7 @@ public class CoupangCapacityService {
             }
             webDriver.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
 
@@ -91,9 +91,10 @@ public class CoupangCapacityService {
         try {
             Connection connection = getConnection();
             Document document = connection.get();
+            log.info("----------------------------------------");
             log.info(document.text());
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
