@@ -10,11 +10,18 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Optional;
 
 /**
@@ -48,22 +55,36 @@ public class CoupangCapacityService {
     }
 
 
-    @Scheduled(fixedRate = 4000)
+    @Scheduled(fixedRate = 2000)
     public void crawlCoupang() {
-        Connection connection = this.getConnection();
-        try{
-            Document document = connection.get();
-            Element element = document.getElementsByClass("prod-quantity__input").first();
-            String cap = element.attr("value");
-            log.info("Remained : " + cap);
+        WebDriver webDriver = new ChromeDriver();
+        webDriver.get("https://www.coupang.com/vp/products/1384804427");
+        Document doc = Jsoup.parse(webDriver.getPageSource());
 
-            if(cap.equals("1")){
-                SlackSender slackSender = new SlackSender(this.getSlackLink());
-                slackSender.sendMessage("GO GO COUPANG");
-            }
-        }catch (IOException e){
-            log.error(e.getMessage());
+        log.info(doc.text());
+        Element element = doc.getElementsByClass("prod-quantity__input").first();
+        String cap = element.attr("value");
+        log.info("Remained : " + cap);
+
+        if(cap.equals("1")){
+            SlackSender slackSender = new SlackSender(this.getSlackLink());
+            slackSender.sendMessage("GO GO COUPANG");
         }
+
+//        Connection connection = this.getConnection();
+//        try{
+//            Document document = connection.get();
+//            Element element = document.getElementsByClass("prod-quantity__input").first();
+//            String cap = element.attr("value");
+//            log.info("Remained : " + cap);
+//
+//            if(cap.equals("1")){
+//                SlackSender slackSender = new SlackSender(this.getSlackLink());
+//                slackSender.sendMessage("GO GO COUPANG");
+//            }
+//        }catch (IOException e){
+//            log.error(e.getMessage());
+//        }
     }
 
     public Connection getConnection(){
