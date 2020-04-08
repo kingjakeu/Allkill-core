@@ -68,7 +68,7 @@ public class CoupangCapacityService {
 
     public Connection getConnection(){
         return Jsoup.connect("https://www.coupang.com/vp/products/1384804427")
-                .timeout(3000)
+                .timeout(2000)
                 .header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'")
                 .header("accept-encoding", "gzip, deflate, br")
                 .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
