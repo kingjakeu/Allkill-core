@@ -59,9 +59,9 @@ public class CoupangCapacityService {
 
     @Scheduled(fixedRate = 3000)
     public void crawlCoupang() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver");
+        //System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver");
         try{
-            //System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver_linux");
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver_linux");
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--no-sandbox");
             options.addArguments("--headless");
