@@ -60,15 +60,16 @@ public class CoupangCapacityService {
     @Scheduled(fixedRate = 3000)
     public void crawlCoupang() {
         //System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver");
-        try{
-            System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver_linux");
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--no-sandbox");
-            options.addArguments("--headless");
-            options.addArguments("-disable-dev-shm-usage");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver_linux");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        options.addArguments("-disable-dev-shm-usage");
 
-            WebDriver webDriver = new ChromeDriver(options);
-            webDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        WebDriver webDriver = new ChromeDriver(options);
+        webDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+
+        try {
             webDriver.get("https://www.coupang.com/vp/products/1384804427");
             Document doc = Jsoup.parse(webDriver.getPageSource());
 
@@ -81,20 +82,11 @@ public class CoupangCapacityService {
                 SlackSender slackSender = new SlackSender(this.getSlackLink());
                 slackSender.sendMessage("GO GO COUPANG");
             }
-            webDriver.close();
+
         } catch (Exception e) {
             log.error(e.getMessage());
-        }
-
-
-
-        try {
-            Connection connection = getConnection();
-            Document document = connection.get();
-            log.info("----------------------------------------");
-            log.info(document.text());
-        } catch (IOException e) {
-            log.error(e.getMessage());
+        }finally {
+            webDriver.close();
         }
     }
 
