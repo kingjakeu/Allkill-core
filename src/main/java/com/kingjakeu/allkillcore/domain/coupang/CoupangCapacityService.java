@@ -58,32 +58,49 @@ public class CoupangCapacityService {
 
 
     @Scheduled(fixedRate = 3000)
-    public void crawlCoupang() throws InterruptedException {
-        //System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver");
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver_linux");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
+    public void crawlCoupang() {
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver");
+        try{
+            //System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver_linux");
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--no-sandbox");
+            options.addArguments("--headless");
+            options.addArguments("-disable-dev-shm-usage");
 
-        WebDriver webDriver = new ChromeDriver(options);
-        webDriver.get("https://www.coupang.com/vp/products/1384804427");
-        webDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        Document doc = Jsoup.parse(webDriver.getPageSource());
+            WebDriver webDriver = new ChromeDriver(options);
+            webDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            webDriver.get("https://www.coupang.com/vp/products/1384804427");
+            Document doc = Jsoup.parse(webDriver.getPageSource());
 
-        //log.info(doc.text());
-        Element element = doc.getElementsByClass("prod-quantity__input").first();
-        String cap = element.attr("value");
-        log.info("Remained : " + cap);
+            log.info(doc.text());
+            Element element = doc.getElementsByClass("prod-quantity__input").first();
+            String cap = element.attr("value");
+            log.info("Remained : " + cap);
 
-        if(cap.equals("1")){
-            SlackSender slackSender = new SlackSender(this.getSlackLink());
-            slackSender.sendMessage("GO GO COUPANG");
+            if(cap.equals("1")){
+                SlackSender slackSender = new SlackSender(this.getSlackLink());
+                slackSender.sendMessage("GO GO COUPANG");
+            }
+            webDriver.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        webDriver.close();
+
+
+
+        try {
+            Connection connection = getConnection();
+            Document document = connection.get();
+            log.info(document.text());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Connection getConnection(){
         return Jsoup.connect("https://www.coupang.com/vp/products/1384804427")
                 .timeout(4000)
+                .userAgent("Mozilla/5.0")
                 .followRedirects(true)
                 .header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'")
                 .header("accept-encoding", "gzip, deflate, br")
