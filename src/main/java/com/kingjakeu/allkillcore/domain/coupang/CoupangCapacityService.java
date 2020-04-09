@@ -87,6 +87,7 @@ public class CoupangCapacityService {
             log.error(e.getMessage());
         }finally {
             webDriver.close();
+            webDriver.quit();
         }
     }
 
